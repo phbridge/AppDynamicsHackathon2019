@@ -60,7 +60,7 @@ def _get_images_from_local(src_path, dst_path):
 
 
 def get_images_from_URL(src_url, dst_url):
-    time.sleep(5)
+    time.sleep(10)
     print("################THIS IS THE SRC URL")
     print(src_url)
     print("################THIS IS THE DST URL")
