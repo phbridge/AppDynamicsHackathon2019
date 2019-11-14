@@ -89,7 +89,7 @@ def _compare_faces(imageSource, imageTarget):
     return len(response['FaceMatches'])
 
 
-def _main():
+def main():
     #face_matches = get_images_from_local(SRC_FILE, DST_FILE)
     #URL_face_matches = get_images_from_URL(SRC_FILE_URL, DST_FILE_URL)
     #print("Face matches: " + str(face_matches))
@@ -97,4 +97,4 @@ def _main():
 
 
 if __name__ == "__main__":
-    _main()
+    main()
