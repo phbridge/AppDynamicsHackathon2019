@@ -119,16 +119,13 @@ def webex_teams_webhook_events():
         else:
             # Message was sent by someone else; parse message and respond.
             if "HELP" in str(message.text).upper() or "?" in message.text:
-                return_messsage = """Welcome to the Cisco End of Sale/End of Life WebEx Bot!!!!
-                This bot is ran and maintained by Phil Bridges (phbridge@cisco.com)
-                Please send recommendations or bug reports in exchange for chilled beverages
+                return_messsage = """Welcome to the Cisco AppD Who the F**k are you bot!!!!
+
 
                 The Bot will respond to the following commands:
                 'help'          - displays this text
                 '?'             - displays this text
-                'EoL XXX'       - bot will return any known EoS/EoL notices for the SKU XXX
-                'EoS XXX'       - bot will return any known EoS/EoL notices for the SKU XXX
-                'SKU'           - bot will try and return any known EoS/EoL notices for text sent to it
+                'Go'            - Will initiate a snapshot of Imposter and Identity
                 """
 
                 # Post the fact to the room where the request was received
