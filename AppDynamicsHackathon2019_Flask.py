@@ -1,51 +1,45 @@
 # Title
-# Get_Check_EOL
+# Snapshot BOT
 #
 # Language
-# Python 3.5
+# Python 3.7
 #
 # Description
-# This script will return the EoS/EoL notice when you give it a valid SKU from a known list of published EoS/EoL
-# notices. This script will only return public notices on Cisco.com. The sourcing for this is part of a seperate script.
-# This only covers the Bot responding and pulling the data from JSON. Not the scrape of the origional Data.
+# This BOT will take two snapshots from two Meraki MV Sense cameras.  The snapshots will be sent to AWS for comparison.
+# Result of the comparison will be sent back to the Webex Teams room from which the Bot request was 
+# initiated from.
 #
 # Contacts
 # Phil Bridges - phbridge@cisco.com
+# Simon Hart - sihart@cisco.com
+# Eirini Spanou - espanou@cisco.com
 #
 # EULA
-# This software is provided as is and with zero support level. Support can be purchased by providing Phil bridges with a
-# varity of Beer, Wine, Steak and Greggs pasties. Please contact phbridge@cisco.com for support costs and arrangements.
-# Until provison of alcohol or baked goodies your on your own but there is no rocket sciecne involved so dont panic too
+# This software is provided as is and with zero support level. Support can be purchased by providing any of the above contacts
+#  with a variety of Beer, Wine, Steak and Greggs pasties. Please contact phbridge@cisco.com for support costs and arrangements.
+# Until provision of alcohol or baked goodies your on your own but there is no rocket sciecne involved so dont panic too
 # much. To accept this EULA you must include the correct flag when running the script. If this script goes crazy wrong and
-# breaks everything then your also on your own and Phil will not accept any liability of any type or kind. As this script
-# belongs to Phil and NOT Cisco then Cisco cannot be held responsable for its use or if it goes bad, nor can Cisco make
-# any profit from this script. Phil can profit from this script but will not assume any liability. Other than the boaring
-# stuff please enjoy and plagerise as you like (as I have no ways to stop you) but common curtacy says to credit me in some
+# breaks everything then your also on your own and we will not accept any liability of any type or kind. As this script
+# belongs to us and NOT Cisco then Cisco cannot be held responsible for its use or if it goes bad, nor can Cisco make
+# any profit from this script. We can profit from this script but will not assume any liability. Other than the boring
+# stuff please enjoy and plagiarise as you like (as I have no ways to stop you) but common courtesy says to credit us in some
 # way [see above comments on Beer, Wine, Steak and Greggs.].
 #
 #
 # Version Control               Comments
-# Version 0.01 Date 16/07/19    Inital draft
+# Version 0.01 Date 14/11/19   Initial draft
 #
 # Version 6.9 Date xx/xx/xx     Took over world and actuially got paid for value added work....If your reading this
 #                               approach me on linkedin for details of weekend "daily" rate
 # Version 7.0 Date xx/xx/xx     Note to the Gaffer - if your reading this then the above line is a joke only :-)
 #
 # ToDo *******************TO DO*********************
-# 1.0 Import data from JSON     DONE
-# 2.0 Respond to WebHook        DONE
-# 3.0 Colect messages           DONE
-# 4.0 Parse messages            DONE
-# 5.0 respond to messages       DONE
-# 6.0 statistics
-# 7.0 wildecard search/match
-# 8.0 SKU validation
-#
+
 
 from webexteamssdk import WebexTeamsAPI, Webhook    # builds WebHook and posts messages
 from flask import request, Flask                    # Flask website
 from datetime import datetime                       # timestamps mostly
-import credentials_example                          # imports static values
+import credentials                          # imports static values
 import logging.handlers                             # Needed for logging
 import re                                           # Matching SKU's
 import wsgiserver                                   # Runs the Flask webesite
@@ -54,20 +48,20 @@ import signal                                       # catches SIGTERM and SIGINT
 import sys                                          # for error to catch and debug
 import snapshot
 
-FLASK_HOST = credentials_example.FLASK_HOST
-FLASK_PORT = credentials_example.FLASK_PORT
-FLASK_HOSTNAME = credentials_example.FLASK_HOSTNAME
+FLASK_HOST = credentials.FLASK_HOST
+FLASK_PORT = credentials.FLASK_PORT
+FLASK_HOSTNAME = credentials.FLASK_HOSTNAME
 TARGET_URL = "http://" + FLASK_HOSTNAME + ":" + str(FLASK_PORT) + "/"
-BOT_ACCESS_TOKEN = "Bearer " + credentials_example.BOT_ACCESS_TOKEN
-ABSOLUTE_PATH = credentials_example.ABSOLUTE_PATH
-LOGFILE = credentials_example.LOGFILE
-LOGFILE_MAX_SIZE = credentials_example.LOGBYTES
-LOGFILE_COUNT = credentials_example.LOGCOUNT
-RESULTSFILE = credentials_example.RESULTSFILE
-TRACKING_ROOM_ID = credentials_example.TRACKING_ROOM_ID
+BOT_ACCESS_TOKEN = "Bearer " + credentials.BOT_ACCESS_TOKEN
+ABSOLUTE_PATH = credentials.ABSOLUTE_PATH
+LOGFILE = credentials.LOGFILE
+LOGFILE_MAX_SIZE = credentials.LOGBYTES
+LOGFILE_COUNT = credentials.LOGCOUNT
+RESULTSFILE = credentials.RESULTSFILE
+TRACKING_ROOM_ID = credentials.TRACKING_ROOM_ID
 
 
-api = WebexTeamsAPI(access_token=credentials_example.BOT_ACCESS_TOKEN)
+api = WebexTeamsAPI(access_token=credentials.BOT_ACCESS_TOKEN)
 
 flask_app = Flask(__name__)
 
@@ -148,19 +142,10 @@ def webex_teams_webhook_events():
                         print(camsnapshots[0])
                         api.messages.create(room.id, text=newmessage)
 
-                        continue
-                    # normalised_sku = "you typed" + go
-                    #search_result, found_sku = search_json_for_sku(sku)
-                    # api.messages.create(room.id, text=newmessage)
-                        # if found_sku:
-                        #     results_logger.info(str(webhook_obj.data.personEmail) + " ##### " + sku)
+                        recognition = ApPDynamicsHackaton2019_AWS(camsnapshots)
 
-                # Post a message to the tracking/debug room
-                # global SKU_LOOKUP_COUNTER
-                # api.messages.create(TRACKING_ROOM_ID, text=str(room.id + " - " +
-                #                                                webhook_obj.data.personEmail + " - " +
-                #                                                message.text + " - " +
-                #                                                str(SKU_LOOKUP_COUNTER.value)))
+                        continue
+
             return 'OK'
 
 
@@ -220,3 +205,4 @@ if __name__ == "__main__":
     create_webhook(api=api)
     http_server = wsgiserver.WSGIServer(host=FLASK_HOST, port=FLASK_PORT, wsgi_app=flask_app)
     http_server.start()
+    #message_to_send = ApPDynamicsHackaton2019_AWS(snapshot)
