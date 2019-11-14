@@ -145,6 +145,7 @@ def webex_teams_webhook_events():
 
                         camsnapshots = snapshot.snapshot()
                         newmessage=camsnapshots[0]
+                        print(camsnapshots[0])
 
                         continue
                     normalised_sku = "you typed" + go
