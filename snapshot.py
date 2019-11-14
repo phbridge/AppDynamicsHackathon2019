@@ -4,15 +4,15 @@ import requests
 import json
 
 import requests
-import credentials_example
+import credentials
 import time
 
-CameraOne = "https://api.meraki.com/api/v0/networks/{}/cameras/{}/snapshot".format(credentials_example.MERAKINETID, credentials_example.CAMERA_1)
-CameraTwo = "https://api.meraki.com/api/v0/networks/{}/cameras/{}/snapshot".format(credentials_example.MERAKINETID, credentials_example.CAMERA_2)
+CameraOne = "https://api.meraki.com/api/v0/networks/{}/cameras/{}/snapshot".format(credentials.MERAKINETID, credentials.CAMERA_1)
+CameraTwo = "https://api.meraki.com/api/v0/networks/{}/cameras/{}/snapshot".format(credentials.MERAKINETID, credentials.CAMERA_2)
 
 def snapshot():
     headers = {
-        'X-Cisco-Meraki-API-Key': credentials_example.MERAKI_API,
+        'X-Cisco-Meraki-API-Key': credentials.MERAKI_API,
         'Content-Type': "application/x-www-form-urlencoded",
         }
     CA2_response = requests.request("POST", CameraTwo, headers=headers)
