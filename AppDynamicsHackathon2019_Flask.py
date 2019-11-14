@@ -146,11 +146,12 @@ def webex_teams_webhook_events():
                         camsnapshots = snapshot.snapshot()
                         newmessage=camsnapshots[0]
                         print(camsnapshots[0])
+                        api.messages.create(room.id, text=newmessage)
 
                         continue
-                    normalised_sku = "you typed" + go
+                    # normalised_sku = "you typed" + go
                     #search_result, found_sku = search_json_for_sku(sku)
-                    api.messages.create(room.id, text=newmessage)
+                    # api.messages.create(room.id, text=newmessage)
                         # if found_sku:
                         #     results_logger.info(str(webhook_obj.data.personEmail) + " ##### " + sku)
 
