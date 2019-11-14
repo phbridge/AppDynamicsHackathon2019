@@ -16,7 +16,9 @@ individual is allowed to sit the exam or not.
 
 To begin with, the receptionist will provide the command for snapshot capture on the Meraki cameras. This will occur via 
 communication on Webex Teams with a Webex Teams bot. The Flask Webhook will retrieve the snapshots from the bot and feed 
-them into the AWS Rekognition engine where the facial comparison takes place. The AWS Rekognition will then feed the confidence score back to the Flask Webhook, which will subsequently post the score onto Webex Cloud and onto Webex teams.
+them into the AWS Rekognition engine where the facial comparison takes place. The AWS Rekognition will then feed the
+confidence score back to the Flask Webhook, which will subsequently post the score onto Webex Cloud and onto Webex teams for
+the receptionist to see.
 
 The Solution Components: Meraki MV12 Cameras, WebEx Cloud, WebEx Teams, Flask Webhook (hosted on AWS), AWS Rekognition 
 (hosted on AWS)
