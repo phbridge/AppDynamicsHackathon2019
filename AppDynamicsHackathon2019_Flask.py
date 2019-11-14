@@ -47,6 +47,7 @@ from multiprocessing import Value                   # keeps counts of things
 import signal                                       # catches SIGTERM and SIGINT
 import sys                                          # for error to catch and debug
 import snapshot
+import AppDynamicsHackathon2019_AWS
 
 FLASK_HOST = credentials.FLASK_HOST
 FLASK_PORT = credentials.FLASK_PORT
@@ -140,9 +141,10 @@ def webex_teams_webhook_events():
                         camsnapshots = snapshot.snapshot()
                         newmessage=camsnapshots[0]
                         print(camsnapshots[0])
-                        api.messages.create(room.id, text=newmessage)
+                        recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0], camsnapshots[0])
+                        api.messages.create(room.id, text=recognition)
 
-                        recognition = ApPDynamicsHackaton2019_AWS(camsnapshots)
+                        #recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0],camsnapshots[0])
 
                         continue
 
