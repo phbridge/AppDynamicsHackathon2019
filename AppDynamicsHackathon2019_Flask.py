@@ -53,20 +53,20 @@ from multiprocessing import Value                   # keeps counts of things
 import signal                                       # catches SIGTERM and SIGINT
 import sys                                          # for error to catch and debug
 
-FLASK_HOST = credentials.FLASK_HOST
-FLASK_PORT = credentials.FLASK_PORT
-FLASK_HOSTNAME = credentials.FLASK_HOSTNAME
+FLASK_HOST = credentials_example.FLASK_HOST
+FLASK_PORT = credentials_example.FLASK_PORT
+FLASK_HOSTNAME = credentials_example.FLASK_HOSTNAME
 TARGET_URL = "http://" + FLASK_HOSTNAME + ":" + str(FLASK_PORT) + "/"
-BOT_ACCESS_TOKEN = "Bearer " + credentials.BOT_ACCESS_TOKEN
-ABSOLUTE_PATH = credentials.ABSOLUTE_PATH
-LOGFILE = credentials.LOGFILE
-LOGFILE_MAX_SIZE = credentials.LOGBYTES
-LOGFILE_COUNT = credentials.LOGCOUNT
-RESULTSFILE = credentials.RESULTSFILE
-TRACKING_ROOM_ID = credentials.TRACKING_ROOM_ID
-STATISTICS_FILENAME = credentials.STATISTICS_FILENAME
+BOT_ACCESS_TOKEN = "Bearer " + credentials_example.BOT_ACCESS_TOKEN
+ABSOLUTE_PATH = credentials_example.ABSOLUTE_PATH
+LOGFILE = credentials_example.LOGFILE
+LOGFILE_MAX_SIZE = credentials_example.LOGBYTES
+LOGFILE_COUNT = credentials_example.LOGCOUNT
+RESULTSFILE = credentials_example.RESULTSFILE
+TRACKING_ROOM_ID = credentials_example.TRACKING_ROOM_ID
+STATISTICS_FILENAME = credentials_example.STATISTICS_FILENAME
 
-api = WebexTeamsAPI(access_token=credentials.BOT_ACCESS_TOKEN)
+api = WebexTeamsAPI(access_token=credentials_example.BOT_ACCESS_TOKEN)
 
 flask_app = Flask(__name__)
 
