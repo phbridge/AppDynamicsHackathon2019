@@ -106,6 +106,7 @@ def _compare_faces(imageSource, imageTarget):
               str(position['Left']) + ' ' +
               str(position['Top']) +
               ' matches with ' + similarity + '% confidence')
+        response += 'The face at ' + str(position['Left']) + ' ' + str(position['Top']) + ' matches with ' + similarity + '% confidence'
 
     imageSource.close()
     imageTarget.close()
