@@ -155,11 +155,11 @@ def webex_teams_webhook_events():
                         #     results_logger.info(str(webhook_obj.data.personEmail) + " ##### " + sku)
 
                 # Post a message to the tracking/debug room
-                global SKU_LOOKUP_COUNTER
-                api.messages.create(TRACKING_ROOM_ID, text=str(room.id + " - " +
-                                                               webhook_obj.data.personEmail + " - " +
-                                                               message.text + " - " +
-                                                               str(SKU_LOOKUP_COUNTER.value)))
+                # global SKU_LOOKUP_COUNTER
+                # api.messages.create(TRACKING_ROOM_ID, text=str(room.id + " - " +
+                #                                                webhook_obj.data.personEmail + " - " +
+                #                                                message.text + " - " +
+                #                                                str(SKU_LOOKUP_COUNTER.value)))
             return 'OK'
 
 
