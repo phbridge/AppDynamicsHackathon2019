@@ -52,23 +52,29 @@ aws_region = credentials.aws_region
 #DST_FILE_URL = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHY2Q3ZmU2MmI3NjUyNDUzZjM3NjExZWI0NDRhOTYwNjk3MzFjNGFlMmU2Y2Q0ZDVjNTc4MjYxZjVmNDA1MjY3Ocf3_bDTWXasvH29tW-OFY6VZp-p3yQLFwdjg0hJYzTTbokvFmalupxQ9ccJAzxL0Wq8q3Qf_kOb5m5t1NtTTj8LCrtBBm2f5v1TYe-4iz6q592mbWNpaL9_2JCpyYXSLa2OPvADaWrpnALjDsBqyc7dCtmoUWC531JPlVft18NSHJJKeMRfXReEzQE-9-PFXcBVP6uuAQ265w967QosaOo"
 
 
-def get_images_from_local(src_path, dst_path):
+def _get_images_from_local(src_path, dst_path):
     imageSource = open(src_path, 'rb')
     imageTarget = open(dst_path, 'rb')
-    return compare_faces(imageSource, imageTarget)
+    return _compare_faces(imageSource, imageTarget)
 
 
 def get_images_from_URL(src_url, dst_url):
+    print(src_url)
+    print(dst_url)
     srcresponse = requests.get(src_url)
     if srcresponse.status_code == 200:
         imageSource = BytesIO(srcresponse.content)
+    else:
+        imageSource = "something bad with source" + str(src_url)
     dstresponse = requests.get(dst_url)
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
-    return compare_faces(imageSource, imageTarget)
+    else:
+        imageTarget = "something bad with target" + str(dst_url)
+    return _compare_faces(imageSource, imageTarget)
 
 
-def compare_faces(imageSource, imageTarget):
+def _compare_faces(imageSource, imageTarget):
     client = boto3.client('rekognition', region_name=aws_region,
                           aws_access_key_id=aws_access_key_id,
                           aws_secret_access_key=aws_secret_access_key)
@@ -92,7 +98,7 @@ def compare_faces(imageSource, imageTarget):
 
 def main():
     print("null")
-    #face_matches = get_images_from_local(SRC_FILE, DST_FILE)
+    #face_matches = _get_images_from_local(SRC_FILE, DST_FILE)
     #URL_face_matches = get_images_from_URL(SRC_FILE_URL, DST_FILE_URL)
     #print("Face matches: " + str(face_matches))
     #print("Face matches: " + str(URL_face_matches))
