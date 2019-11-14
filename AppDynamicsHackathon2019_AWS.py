@@ -43,6 +43,7 @@ import boto3
 import requests
 from io import BytesIO
 import credentials
+import time
 
 aws_access_key_id = credentials.aws_access_key_id
 aws_secret_access_key = credentials.aws_secret_access_key
@@ -59,6 +60,7 @@ def _get_images_from_local(src_path, dst_path):
 
 
 def get_images_from_URL(src_url, dst_url):
+    time.sleep(10)
     print("################THIS IS THE SRC URL")
     print(src_url)
     print("################THIS IS THE DST URL")
