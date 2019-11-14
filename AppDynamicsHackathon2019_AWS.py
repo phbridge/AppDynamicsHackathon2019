@@ -59,7 +59,9 @@ def _get_images_from_local(src_path, dst_path):
 
 
 def get_images_from_URL(src_url, dst_url):
+    print("################THIS IS THE SRC URL")
     print(src_url)
+    print("################THIS IS THE DST URL")
     print(dst_url)
     srcresponse = requests.get(src_url)
     if srcresponse.status_code == 200:
