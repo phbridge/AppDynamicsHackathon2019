@@ -52,6 +52,7 @@ import wsgiserver                                   # Runs the Flask webesite
 from multiprocessing import Value                   # keeps counts of things
 import signal                                       # catches SIGTERM and SIGINT
 import sys                                          # for error to catch and debug
+import snapshot
 
 FLASK_HOST = credentials_example.FLASK_HOST
 FLASK_PORT = credentials_example.FLASK_PORT
@@ -92,7 +93,7 @@ def webex_teams_webhook_events():
                    </html>
                 """)
     elif request.method == 'POST':
-        logger.info("POST messaged recieved on port with the following details")
+        logger.info("POST messaged received on port with the following details")
         json_data = request.json
         logger.info(str(json_data))
         # Create a Webhook object from the JSON data
@@ -138,14 +139,17 @@ def webex_teams_webhook_events():
                 lookup_go = re.split(' |\n', str(message.text).upper())
                 # lookup_go = str(message.text).split("\n").split(" ")
                 for go in lookup_go:
-                    normalised_sku = sku.upper().strip(" ").strip("\n")
+                    normalised_sku = go.upper().strip(" ").strip("\n")
                     if normalised_sku == "Go" or \
                             normalised_sku == "go" :
+
+                        camsnapshots = snapshot.snapshot()
+                        newmessage=camsnapshots[0]
 
                         continue
                     normalised_sku = "you typed" + go
                     #search_result, found_sku = search_json_for_sku(sku)
-                    api.messages.create(room.id, text=go)
+                    api.messages.create(room.id, text=newmessage)
                         # if found_sku:
                         #     results_logger.info(str(webhook_obj.data.personEmail) + " ##### " + sku)
 
