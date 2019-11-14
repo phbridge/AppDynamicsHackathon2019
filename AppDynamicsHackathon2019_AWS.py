@@ -90,9 +90,11 @@ def _compare_faces(imageSource, imageTarget):
                           aws_secret_access_key=aws_secret_access_key)
     print("FIRST")
     print(type(imageSource.read()))
+    print(type(imageSource))
     print("SECOND")
     print(type(imageTarget.read()))
-    response = client.compare_faces(SimilarityThreshold=80, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
+    print(type(imageTarget))
+    response = client.compare_faces(SimilarityThreshold=80, SourceImage={'Bytes': imageSource}, TargetImage={'Bytes': imageTarget})
 
     for faceMatch in response['FaceMatches']:
         position = faceMatch['Face']['BoundingBox']
