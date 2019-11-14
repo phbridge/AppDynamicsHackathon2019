@@ -68,11 +68,13 @@ def get_images_from_URL(src_url, dst_url):
     if srcresponse.status_code == 200:
         imageSource = BytesIO(srcresponse.content)
         print("################GOT SRC Content")
+    print(str(srcresponse.status_code))
     dstresponse = requests.get(dst_url)
     print("################GOT DST")
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
         print("################GOT DST Content")
+    print(str(dstresponse.status_code))
     return _compare_faces(imageSource, imageTarget)
 
 
