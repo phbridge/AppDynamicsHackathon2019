@@ -64,7 +64,6 @@ LOGFILE_MAX_SIZE = credentials_example.LOGBYTES
 LOGFILE_COUNT = credentials_example.LOGCOUNT
 RESULTSFILE = credentials_example.RESULTSFILE
 TRACKING_ROOM_ID = credentials_example.TRACKING_ROOM_ID
-STATISTICS_FILENAME = credentials_example.STATISTICS_FILENAME
 
 api = WebexTeamsAPI(access_token=credentials_example.BOT_ACCESS_TOKEN)
 
