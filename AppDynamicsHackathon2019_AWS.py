@@ -64,6 +64,10 @@ def get_images_from_URL(src_url, dst_url):
     print("################THIS IS THE DST URL")
     print(dst_url)
     srcresponse = requests.get(src_url)
+    print("content below")
+    print(srcresponse.content)
+    print("text below")
+    print(srcresponse.text)
     print("################GOT SRC")
     if srcresponse.status_code == 200:
         imageSource = BytesIO(srcresponse.content)
@@ -103,10 +107,10 @@ def _compare_faces(imageSource, imageTarget):
 def main():
     print("null")
 
-    src_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHNzJjMzliMzM4OWQzNjM3ZGU2YTM0ZDhlYWYzMzk3NDY2NmRhYmMyYzExOTNjMzMxMDQ4NGI4MTRiOTdhNDRiMdsKmdUgM4Mujl0t-QMDsVEVc3Pej58lc1epFGwAikZfNdlbCph-9O7YcPsiZaCury_TVur2OmLsXI4BDEhs9UUsHq7hfnl2wFW_M6UhsZc42cJbmeBQNQGp-qCQlpcNw1Tmn-q05IbfH61GNyjdVjvfjGIW8HixXVR6NjpZC0XsXYFtS_QP8z2VtbCN_YWWUzny347dpWB9mGfxIyoBpC8"
-    dst_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHNzJjMzliMzM4OWQzNjM3ZGU2YTM0ZDhlYWYzMzk3NDY2NmRhYmMyYzExOTNjMzMxMDQ4NGI4MTRiOTdhNDRiMdsKmdUgM4Mujl0t-QMDsVEVc3Pej58lc1epFGwAikZfNdlbCph-9O7YcPsiZaCury_TVur2OmLsXI4BDEhs9UUsHq7hfnl2wFW_M6UhsZc42cJbmeBQNQGp-qCQlpcNw1Tmn-q05IbfH61GNyjdVjvfjGIW8HixXVR6NjpZC0XsXYFtS_QP8z2VtbCN_YWWUzny347dpWB9mGfxIyoBpC8"
+    #src_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHNzJjMzliMzM4OWQzNjM3ZGU2YTM0ZDhlYWYzMzk3NDY2NmRhYmMyYzExOTNjMzMxMDQ4NGI4MTRiOTdhNDRiMdsKmdUgM4Mujl0t-QMDsVEVc3Pej58lc1epFGwAikZfNdlbCph-9O7YcPsiZaCury_TVur2OmLsXI4BDEhs9UUsHq7hfnl2wFW_M6UhsZc42cJbmeBQNQGp-qCQlpcNw1Tmn-q05IbfH61GNyjdVjvfjGIW8HixXVR6NjpZC0XsXYFtS_QP8z2VtbCN_YWWUzny347dpWB9mGfxIyoBpC8"
+    #dst_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHNzJjMzliMzM4OWQzNjM3ZGU2YTM0ZDhlYWYzMzk3NDY2NmRhYmMyYzExOTNjMzMxMDQ4NGI4MTRiOTdhNDRiMdsKmdUgM4Mujl0t-QMDsVEVc3Pej58lc1epFGwAikZfNdlbCph-9O7YcPsiZaCury_TVur2OmLsXI4BDEhs9UUsHq7hfnl2wFW_M6UhsZc42cJbmeBQNQGp-qCQlpcNw1Tmn-q05IbfH61GNyjdVjvfjGIW8HixXVR6NjpZC0XsXYFtS_QP8z2VtbCN_YWWUzny347dpWB9mGfxIyoBpC8"
 
-    get_images_from_URL(src_url, dst_url)
+    #get_images_from_URL(src_url, dst_url)
     #face_matches = _get_images_from_local(SRC_FILE, DST_FILE)
     #URL_face_matches = get_images_from_URL(SRC_FILE_URL, DST_FILE_URL)
     #print("Face matches: " + str(face_matches))
