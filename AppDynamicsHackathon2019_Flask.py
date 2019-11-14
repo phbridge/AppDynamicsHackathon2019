@@ -65,6 +65,7 @@ LOGFILE_COUNT = credentials_example.LOGCOUNT
 RESULTSFILE = credentials_example.RESULTSFILE
 TRACKING_ROOM_ID = credentials_example.TRACKING_ROOM_ID
 
+
 api = WebexTeamsAPI(access_token=credentials_example.BOT_ACCESS_TOKEN)
 
 flask_app = Flask(__name__)
@@ -134,20 +135,19 @@ def webex_teams_webhook_events():
                                                                message.text))
                 return 'OK'
             else:
-                lookup_skus = re.split(' |\n', str(message.text).upper())
-                # lookup_skus = str(message.text).split("\n").split(" ")
-                for sku in lookup_skus:
+                lookup_go = re.split(' |\n', str(message.text).upper())
+                # lookup_go = str(message.text).split("\n").split(" ")
+                for go in lookup_go:
                     normalised_sku = sku.upper().strip(" ").strip("\n")
-                    if normalised_sku == "EOL" or \
-                            normalised_sku == "EOS" or \
-                            normalised_sku == "CISCOEOL" or \
-                            normalised_sku == "SKU" or \
-                            normalised_sku == "":
+                    if normalised_sku == "Go" or \
+                            normalised_sku == "go" :
+
                         continue
-                    search_result, found_sku = search_json_for_sku(sku)
-                    api.messages.create(room.id, text=search_result)
-                    if found_sku:
-                        results_logger.info(str(webhook_obj.data.personEmail) + " ##### " + sku)
+                    normalised_sku = "you typed" + go
+                    #search_result, found_sku = search_json_for_sku(sku)
+                    api.messages.create(room.id, text=go)
+                        # if found_sku:
+                        #     results_logger.info(str(webhook_obj.data.personEmail) + " ##### " + sku)
 
                 # Post a message to the tracking/debug room
                 global SKU_LOOKUP_COUNTER
@@ -158,42 +158,9 @@ def webex_teams_webhook_events():
             return 'OK'
 
 
-def load_json_from_file():
-    now = datetime.now()
-    datestring = str(now.year) + "-" + str(now.month) + "-" + str(now.day)
-    # local_filename = ABSOLUTE_PATH + datestring + "-Cisco_KnownGoodValues.json"
-    local_filename = ABSOLUTE_PATH + "CONSTANT-Cisco_KnownGoodValues.json"
-    kgv_jdata = Database(local_filename)
-    return kgv_jdata
 
 
-def search_json_for_sku(sku):
-    found_sku = False
-    try:
-        return_string = ""
-        return_string += "here is the EoS/EoL data for SKU: " + sku + "\n"
-        return_string += "end of sale date: " + kgv_jdata[sku]["eos_date"] + "\n"
-        return_string += "last date of support: " + kgv_jdata[sku]["ldos_date"] + "\n"
-        return_string += "last ship date: " + kgv_jdata[sku]["last_ship_date"] + "\n"
-        return_string += "migration product: " + kgv_jdata[sku]["migration"] + "\n"
-        return_string += "end migration product: " + kgv_jdata[sku]["end_migration"] + "\n"
-        return_string += "full URL for notice is: " + kgv_jdata[sku]["url"] + "\n"
-        global SKU_LOOKUP_COUNTER
-        with SKU_LOOKUP_COUNTER.get_lock():
-            SKU_LOOKUP_COUNTER.value += 1
-        found_sku = True
-    except TypeError as e:
-        if str(e) == "'NoneType' object is not subscriptable":
-            return_string = sku
-            return_string += " is not found in the EoS EoL database"
-            return_string += " SKU is either invalid, part of a bigger SKU or not EoL.....yet"
-        else:
-            return_string = "something went wrong hit error "
-            return_string += str(e)
-    except Exception as e:
-        return_string = "something went wrong hit error "
-        return_string += str(e)
-    return return_string, found_sku
+
 
 
 def delete_webhook(api):
@@ -216,48 +183,7 @@ def create_webhook(api):
     return webhook
 
 
-def graceful_killer(signal_number, frame):
-    logger.info("Got Kill signal")
-    logger.info('Received:', signal_number)
-    logger.info("writing some things to files")
-    try:
-        statistics_file = open(STATISTICS_FILENAME, 'wt')
-        statistics_file.seek(0)
-        statistics_file.writelines("EOL-COUNT=" + str(SKU_LOOKUP_COUNTER.value))
-        statistics_file.truncate()
-        statistics_file.flush()
-        statistics_file.close()
-        logger.info("file write complete")
-    except Exception as e:
-        logger.error("something went bad writing statistics file")
-        logger.error("Unexpected error:", sys.exc_info()[0])
-        logger.error("Unexpected error:", str(e))
-    logger.info("clean close complete")
-    quit()
 
-
-def load_statistics_file():
-    try:
-        logger.info("opening statistics file")
-        global SKU_LOOKUP_COUNTER
-        statistics_file = open(STATISTICS_FILENAME, 'rt')
-        for line in statistics_file.readlines():
-            logger.info(line)
-            if "EOL-COUNT" in line:
-                logger.info("in loop")
-                count_to_add = int(line.split("=")[-1])
-                logger.info("loaded previous hit count of = " + str(count_to_add))
-                with SKU_LOOKUP_COUNTER.get_lock():
-                    SKU_LOOKUP_COUNTER.value += count_to_add
-                logger.info("added previous hit count to current count for persistence")
-        logger.info("closing statistics file")
-        statistics_file.close()
-        return
-    except Exception as e:
-        logger.error("something went bad opening statistics file")
-        logger.error("Unexpected error:", sys.exc_info()[0])
-        logger.error("Unexpected error:", str(e))
-    return
 
 
 if __name__ == "__main__":
@@ -271,22 +197,6 @@ if __name__ == "__main__":
     logger.info("---------------------- STARTING ----------------------")
     logger.info("cisco EoS EoL script started")
 
-    # Catch SIGTERM etc
-    signal.signal(signal.SIGHUP, graceful_killer)
-    signal.signal(signal.SIGINT, graceful_killer)
-    signal.signal(signal.SIGQUIT, graceful_killer)
-    signal.signal(signal.SIGILL, graceful_killer)
-    signal.signal(signal.SIGTRAP, graceful_killer)
-    signal.signal(signal.SIGABRT, graceful_killer)
-    signal.signal(signal.SIGBUS, graceful_killer)
-    signal.signal(signal.SIGFPE, graceful_killer)
-    #signal.signal(signal.SIGKILL, graceful_killer)
-    signal.signal(signal.SIGUSR1, graceful_killer)
-    signal.signal(signal.SIGSEGV, graceful_killer)
-    signal.signal(signal.SIGUSR2, graceful_killer)
-    signal.signal(signal.SIGPIPE, graceful_killer)
-    signal.signal(signal.SIGALRM, graceful_killer)
-    signal.signal(signal.SIGTERM, graceful_killer)
 
     # Create Results logger
     results_logger = logging.getLogger("Cisco EoL EoS Request Logger")
@@ -297,7 +207,6 @@ if __name__ == "__main__":
     results_logger.setLevel(logging.INFO)
 
     logger.info("Load stats")
-    load_statistics_file()
     logger.info("Load EoL data ")
     kgv_jdata = load_json_from_file()
     logger.info("deleting old webhook")
