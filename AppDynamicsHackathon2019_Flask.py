@@ -45,8 +45,7 @@
 from webexteamssdk import WebexTeamsAPI, Webhook    # builds WebHook and posts messages
 from flask import request, Flask                    # Flask website
 from datetime import datetime                       # timestamps mostly
-import credentials_example                                  # imports static values
-from jsondb.db import Database                      # creates JSON DB for SKU lookup
+import credentials_example                          # imports static values
 import logging.handlers                             # Needed for logging
 import re                                           # Matching SKU's
 import wsgiserver                                   # Runs the Flask webesite
