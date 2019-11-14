@@ -131,9 +131,9 @@ def webex_teams_webhook_events():
                 # Post the fact to the room where the request was received
                 api.messages.create(room.id, text=return_messsage)
                 # Post a message to the tracking/debug room
-                api.messages.create(TRACKING_ROOM_ID, text=str(room.id + " - " +
-                                                               webhook_obj.data.personEmail + " - " +
-                                                               message.text))
+                # api.messages.create(TRACKING_ROOM_ID, text=str(room.id + " - " +
+                #                                                webhook_obj.data.personEmail + " - " +
+                #                                                message.text))
                 return 'OK'
             else:
                 lookup_go = re.split(' |\n', str(message.text).upper())
