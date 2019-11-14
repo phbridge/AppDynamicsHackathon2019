@@ -208,7 +208,6 @@ if __name__ == "__main__":
 
     logger.info("Load stats")
     logger.info("Load EoL data ")
-    kgv_jdata = load_json_from_file()
     logger.info("deleting old webhook")
     delete_webhook(api=api)
     logger.info("creating new webhook")
