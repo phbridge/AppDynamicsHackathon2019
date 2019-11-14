@@ -33,6 +33,6 @@ def snapshot():
     cameraphil.append(CA1_response.json()["url"])
     cameraphil.append(CA1_response.json()["url"])
 
-    return camerasnaps
+    return cameraphil
 
     #return camerasnaps
