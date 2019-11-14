@@ -75,6 +75,7 @@ def get_images_from_URL(src_url, dst_url):
         imageSource = BytesIO(srcresponse.content)
         print("################GOT SRC Content")
     print(str(srcresponse.status_code))
+    time.sleep(5)
     dstresponse = requests.get(dst_url)
     print("################GOT DST")
     if dstresponse.status_code == 200:
@@ -94,7 +95,7 @@ def _compare_faces(imageSource, imageTarget):
     print("SECOND")
     print(type(imageTarget.read()))
     print(type(imageTarget))
-    response = client.compare_faces(SimilarityThreshold=80, SourceImage={'Bytes': imageSource}, TargetImage={'Bytes': imageTarget})
+    response = client.compare_faces(SimilarityThreshold=80, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
 
     for faceMatch in response['FaceMatches']:
         position = faceMatch['Face']['BoundingBox']
