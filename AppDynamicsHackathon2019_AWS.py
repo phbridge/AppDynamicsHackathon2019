@@ -35,6 +35,7 @@
 # 3.0 Initiate client               DONE
 # 4.0 Use client for images         DONE
 # 5.0 Return data in nice format    DONE
+# 6.0 Tidy up messy crap
 #
 #
 
@@ -47,14 +48,14 @@ aws_access_key_id = credentials.aws_access_key_id
 aws_secret_access_key = credentials.aws_secret_access_key
 aws_region = credentials.aws_region
 
-SRC_FILE_URL = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHZjJjY2IzMmQ3YWYyZGM4YjZkMjhhNzA1OWIwZDExZDRmYWU3YmYwMWM2MGRmNGIyZjBkMzI2MmJmMTY3NzI2N2XrKemmY6sAk5mMUvxYtuvL5SxNuHGFNtVO3zHBse0SXhVR9MvyZW-yY94Bj5mp_3vfkPZmQSIitBxM1hxg7wD8PjkbkzeQ1Plc1gtb1j55aWjPiR7DfOvI2FJSKFAIhh2A9SZ4JIT1XedQCiIlKEMY1hh5Ts7Y2EajZ5VKSqTDOIuRlZosiECoEwXmjMHaV93JZiNgcydMnyEQbsVVpUE"
-DST_FILE_URL = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHY2Q3ZmU2MmI3NjUyNDUzZjM3NjExZWI0NDRhOTYwNjk3MzFjNGFlMmU2Y2Q0ZDVjNTc4MjYxZjVmNDA1MjY3Ocf3_bDTWXasvH29tW-OFY6VZp-p3yQLFwdjg0hJYzTTbokvFmalupxQ9ccJAzxL0Wq8q3Qf_kOb5m5t1NtTTj8LCrtBBm2f5v1TYe-4iz6q592mbWNpaL9_2JCpyYXSLa2OPvADaWrpnALjDsBqyc7dCtmoUWC531JPlVft18NSHJJKeMRfXReEzQE-9-PFXcBVP6uuAQ265w967QosaOo"
+#SRC_FILE_URL = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHZjJjY2IzMmQ3YWYyZGM4YjZkMjhhNzA1OWIwZDExZDRmYWU3YmYwMWM2MGRmNGIyZjBkMzI2MmJmMTY3NzI2N2XrKemmY6sAk5mMUvxYtuvL5SxNuHGFNtVO3zHBse0SXhVR9MvyZW-yY94Bj5mp_3vfkPZmQSIitBxM1hxg7wD8PjkbkzeQ1Plc1gtb1j55aWjPiR7DfOvI2FJSKFAIhh2A9SZ4JIT1XedQCiIlKEMY1hh5Ts7Y2EajZ5VKSqTDOIuRlZosiECoEwXmjMHaV93JZiNgcydMnyEQbsVVpUE"
+#DST_FILE_URL = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHY2Q3ZmU2MmI3NjUyNDUzZjM3NjExZWI0NDRhOTYwNjk3MzFjNGFlMmU2Y2Q0ZDVjNTc4MjYxZjVmNDA1MjY3Ocf3_bDTWXasvH29tW-OFY6VZp-p3yQLFwdjg0hJYzTTbokvFmalupxQ9ccJAzxL0Wq8q3Qf_kOb5m5t1NtTTj8LCrtBBm2f5v1TYe-4iz6q592mbWNpaL9_2JCpyYXSLa2OPvADaWrpnALjDsBqyc7dCtmoUWC531JPlVft18NSHJJKeMRfXReEzQE-9-PFXcBVP6uuAQ265w967QosaOo"
 
 
-def _get_images_from_local(src_path, dst_path):
+def get_images_from_local(src_path, dst_path):
     imageSource = open(src_path, 'rb')
     imageTarget = open(dst_path, 'rb')
-    return _compare_faces(imageSource, imageTarget)
+    return compare_faces(imageSource, imageTarget)
 
 
 def get_images_from_URL(src_url, dst_url):
@@ -64,10 +65,10 @@ def get_images_from_URL(src_url, dst_url):
     dstresponse = requests.get(dst_url)
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
-    return _compare_faces(imageSource, imageTarget)
+    return compare_faces(imageSource, imageTarget)
 
 
-def _compare_faces(imageSource, imageTarget):
+def compare_faces(imageSource, imageTarget):
     client = boto3.client('rekognition', region_name=aws_region,
                           aws_access_key_id=aws_access_key_id,
                           aws_secret_access_key=aws_secret_access_key)
@@ -90,6 +91,7 @@ def _compare_faces(imageSource, imageTarget):
 
 
 def main():
+    print("null")
     #face_matches = get_images_from_local(SRC_FILE, DST_FILE)
     #URL_face_matches = get_images_from_URL(SRC_FILE_URL, DST_FILE_URL)
     #print("Face matches: " + str(face_matches))
