@@ -6,18 +6,16 @@ industries all over the world. In the case of training test centers, they are fa
 attempts, where the person showing up to take the exam is not, in fact, the person that registered for it and would 
 subsequently receive credit for passing. The process of human identification in test centers is usually carried out by 
 the receptionists. Hence, this process is heavily prone to human error as individuals are not particularly good with spotting
-differences especially as it relates to strangers' faces (unless those are striking). For any Suits fans out there, our solution
-is aiming to prevent anyone from pulling a Mike Ross on an exam day.
+differences especially as it relates to strangers' faces (unless those are striking). For any Suits fans out there, our solution is aiming to prevent anyone from pulling a Mike Ross on an exam day.
 
-The How: By utilizing Meraki MV cameras placed at reception, we are capturing a screenshot of the exam candidate showing up 
-and a screenshot of the ID card they brought along. Our goal is to compare and contrast the face of the person and the face on 
+The How: By utilizing Meraki MV cameras placed at reception, we are capturing a snapshot of the exam candidate showing up 
+and a snapshot of the ID card they brought along. Our goal is to compare and contrast the face of the person and the face on 
 the ID card and provide the receptionist with a confidence score on the person's identity which would determine whether the
 individual is allowed to sit the exam or not. 
 
 To begin with, the receptionist will provide the command for snapshot capture on the Meraki cameras. This will occur via 
 communication on Webex Teams with a Webex Teams bot. The Flask Webhook will retrieve the snapshots from the bot and feed 
-them into the AWS Rekognition engine where the facial comparison takes place. The AWS Rekognition will then feed the confidence 
-score back to the Flask Webhook, which will subsequently post the score onto Webex Cloud and onto Webex teams.
+them into the AWS Rekognition engine where the facial comparison takes place. The AWS Rekognition will then feed the confidence score back to the Flask Webhook, which will subsequently post the score onto Webex Cloud and onto Webex teams.
 
 The Solution Components: Meraki MV12 Cameras, WebEx Cloud, WebEx Teams, Flask Webhook (hosted on AWS), AWS Rekognition 
 (hosted on AWS)
