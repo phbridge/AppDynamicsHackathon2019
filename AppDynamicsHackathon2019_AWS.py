@@ -88,10 +88,11 @@ def _compare_faces(imageSource, imageTarget):
     client = boto3.client('rekognition', region_name=aws_region,
                           aws_access_key_id=aws_access_key_id,
                           aws_secret_access_key=aws_secret_access_key)
-
-    response = client.compare_faces(SimilarityThreshold=80,
-                                    SourceImage={'Bytes': imageSource.read()},
-                                    TargetImage={'Bytes': imageTarget.read()})
+    print("FIRST")
+    print(type(imageSource.read()))
+    print("SECOND")
+    print(type(imageTarget.read()))
+    response = client.compare_faces(SimilarityThreshold=80, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
 
     for faceMatch in response['FaceMatches']:
         position = faceMatch['Face']['BoundingBox']
