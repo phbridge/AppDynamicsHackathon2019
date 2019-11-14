@@ -26,4 +26,4 @@ def snapshot():
 #print(CA1_response.url)
 #print(CA2_response.url)
 
-    print(camerasnaps)
+    return camerasnaps
