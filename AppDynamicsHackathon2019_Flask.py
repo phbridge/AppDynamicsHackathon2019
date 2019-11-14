@@ -140,7 +140,7 @@ def webex_teams_webhook_events():
                 # lookup_go = str(message.text).split("\n").split(" ")
                 for go in lookup_go:
                     normalised_sku = go.upper().strip(" ").strip("\n")
-                    if normalised_sku == "Go" or \
+                    if normalised_sku == "GO" or \
                             normalised_sku == "go" :
 
                         camsnapshots = snapshot.snapshot()
