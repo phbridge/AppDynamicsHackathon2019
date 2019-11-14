@@ -60,16 +60,16 @@ def _get_images_from_local(src_path, dst_path):
 
 
 def get_images_from_URL(src_url, dst_url):
-    time.sleep(10)
+    time.sleep(5)
     print("################THIS IS THE SRC URL")
     print(src_url)
     print("################THIS IS THE DST URL")
     print(dst_url)
     srcresponse = requests.get(src_url)
     print("content below")
-    print(srcresponse.content)
+    #print(srcresponse.content)
     print("text below")
-    print(srcresponse.text)
+    #print(srcresponse.text)
     print("################GOT SRC")
     if srcresponse.status_code == 200:
         imageSource = BytesIO(srcresponse.content)
