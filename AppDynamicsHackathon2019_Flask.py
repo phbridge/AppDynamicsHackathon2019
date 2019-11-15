@@ -118,7 +118,7 @@ def webex_teams_webhook_events():
             # Message was sent by someone else; parse message and respond.
             if message.files:
                 print(message.files)
-                camsnapshots, meraki_snapshot_url_creation_time = snapshot.snapshot()
+                camsnapshots = snapshot.snapshot()
                 newmessage = camsnapshots[0]
                 print(camsnapshots[0])
                 api.messages.create(room.id, text="Mugshot Taken")
@@ -146,15 +146,15 @@ def webex_teams_webhook_events():
 
                 api.messages.create(room.id, text=recognition)
 
-                try:
-                    print(str(int(webex_attachement_response_time.microseconds)))
-                    AppDController.Get_image(int(webex_attachement_response_time.microseconds), "WebEx")
-                    print(str(int(meraki_snapshot_url_creation_time.microseconds)))
-                    AppDController.Meraki_snap(int(meraki_snapshot_url_creation_time.microseconds), "Meraki_snap")
-                    AppDController.Pull_Meraki()
-                    AppDController.Upload_AWS()
-                except Exception as e:
-                    return "error hit was " + str(e)
+                #try:
+                #    print(str(int(webex_attachement_response_time.microseconds)))
+                #    AppDController.Get_image(int(webex_attachement_response_time.microseconds), "WebEx")
+                #    print(str(int(meraki_snapshot_url_creation_time.microseconds)))
+                #    AppDController.Meraki_snap(int(meraki_snapshot_url_creation_time.microseconds), "Meraki_snap")
+                #    AppDController.Pull_Meraki()
+                #    AppDController.Upload_AWS()
+                #except Exception as e:
+                #    return "error hit was " + str(e)
 
 
 
@@ -189,7 +189,7 @@ def webex_teams_webhook_events():
                     if normalised_sku == "GO" or \
                             normalised_sku == "go" :
 
-                        camsnapshots, meraki_snapshot_url_creation_time = snapshot.snapshot()
+                        camsnapshots = snapshot.snapshot()
                         newmessage=camsnapshots[0]
                         print(camsnapshots[0])
                         recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0], camsnapshots[1])
