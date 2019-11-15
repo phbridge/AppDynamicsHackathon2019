@@ -144,7 +144,9 @@ def webex_teams_webhook_events():
                 api.messages.create(room.id, text=recognition)
 
                 try:
+                    print(str(int(webex_attachement_response_time.seconds)))
                     AppDController.Get_image(int(webex_attachement_response_time.seconds), "WebEx")
+                    print(str(int(meraki_snapshot_url_creation_time.seconds)))
                     AppDController.Meraki_snap(int(meraki_snapshot_url_creation_time.seconds), "Meraki_snap")
                     AppDController.Pull_Meraki()
                     AppDController.Upload_AWS()
