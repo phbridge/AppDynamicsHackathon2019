@@ -90,7 +90,7 @@ def get_images_from_LOCAL_and_URL(srcimage, dst_url):
 
 
 def get_images_from_URL(src_url, dst_url):
-    time.sleep(10)
+    time.sleep(2)
     print("################THIS IS THE SRC URL")
     print(src_url)
     print("################THIS IS THE DST URL")
@@ -139,7 +139,17 @@ def _compare_faces(imageSource, imageTarget):
 
     imageSource.close()
     imageTarget.close()
-    return len(response['FaceMatches'])
+    imposter = True
+    response = ""
+    if len(response['FaceMatches']) == 1:
+        imposter = False
+        response = "The person is genuine we are " + str(similarity) + " confident about this"
+    else:
+        response += "WARNING WARNING"
+        response += "The person is NOT genuine we are " + str(similarity) + " confident about this"
+        response += "WARNING WARNING"
+    return response 
+    # similarity, imposter
 
 
 def main():
