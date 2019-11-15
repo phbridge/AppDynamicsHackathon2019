@@ -36,10 +36,10 @@ This sample code illustrates use of IoT REST API with sample data generated for 
 parser = argparse.ArgumentParser()
 
 # Mandatory argument - appkey
-parser.add_argument("appkey", help="set application key")
+parser.add_argument("appkey", help="EC-AAB-FYG")
 
 #optional arguments
-parser.add_argument("-c", "--collectorurl", default = "https://iot-col.eum-appdynamics.com",
+parser.add_argument("-c", "--collectorurl", default = "https://fra-iot-col.eum-appdynamics.com",
                     help="set IoT Collector URL to which the beacons should be sent to")
 parser.add_argument("-u", "--url", help="set sample URL to trigger network request and capture network event")
 parser.add_argument("-X", "--request", default = "GET", help="set request method for the URL. Default is set to GET")
@@ -49,16 +49,16 @@ parser.add_argument("-v", "--verbose", action="store_true", help="enable debug i
 args = parser.parse_args()
 
 # Construct collector url to send beacons to
-sendBeaconUrl = args.collectorurl + '/eumcollector/iot/v1/application/' + args.appkey + '/beacons'
+sendBeaconUrl = 'https://fra-iot-col.eum-appdynamics.com/eumcollector/iot/v1/application/EC-AAB-FYG/beacons'
 
 if args.verbose:
   print("Beacon URL: {}".format(sendBeaconUrl))
 
 # Device Information on which the application is running
 device_info = {
-    'deviceId': '1992',
-    'deviceName': 'AudiS3',
-    'deviceType': 'vng_SmartCar'
+    'deviceId': 'Q2FV-363D-9Z7Z',
+    'deviceName': 'hack-mv1',
+    'deviceType': 'Meraki_Camera'
   }
 
 # Version Information of the application
@@ -68,6 +68,68 @@ version_info = {
     'softwareVersion': '2.0',
     'operatingSystemVersion': '2.0'
   }
+
+#def post_delay_time(Get_image, Meraki_snap, Pull_Meraki, Upload_AWS):
+
+def Get_image(duration, eventName):
+  custom_event = [{
+      'eventType': eventName,
+      'eventSummary': 'Time to get image from Webex Teams',
+      'timestamp': (int(time.time()) * 1000),
+      'duration': duration
+    }]
+  beacon = [{}]
+  beacon[0]['deviceInfo'] = device_info
+  beacon[0]['versionInfo'] = version_info
+  beacon[0]['customEvents'] = custom_event
+
+  print("send Get_image time event")
+  send_beacon(beacon)
+
+def Meraki_snap(duration, eventName):
+  custom_event = [{
+      'eventType': eventName,
+      'eventSummary': 'Time to send Meraki snap time event',
+      'timestamp': (int(time.time()) * 1000),
+      'duration': duration
+    }]
+  beacon = [{}]
+  beacon[0]['deviceInfo'] = device_info
+  beacon[0]['versionInfo'] = version_info
+  beacon[0]['customEvents'] = custom_event
+
+  print("send Meraki_snap time event")
+  send_beacon(beacon)
+
+def Pull_Meraki(duration, eventName):
+  custom_event = [{
+      'eventType': eventName,
+      'eventSummary': 'Time to get image from Webex Teams',
+      'timestamp': (int(time.time()) * 1000),
+      'duration': duration
+    }]
+  beacon = [{}]
+  beacon[0]['deviceInfo'] = device_info
+  beacon[0]['versionInfo'] = version_info
+  beacon[0]['customEvents'] = custom_event
+
+  print("send Pull_Meraki time event")
+  send_beacon(beacon)
+
+def Upload_AWS(duration, eventName):
+  custom_event = [{
+      'eventType': eventName,
+      'eventSummary': 'Time to get image to upload on to AWS',
+      'timestamp': (int(time.time()) * 1000),
+      'duration': duration
+    }]
+  beacon = [{}]
+  beacon[0]['deviceInfo'] = device_info
+  beacon[0]['versionInfo'] = version_info
+  beacon[0]['customEvents'] = custom_event
+
+  print("send Upload_AWS time event")
+  send_beacon(beacon)
 
 
 # Construct and send a beacon with a sample custom event
@@ -264,15 +326,24 @@ def send_beacon(beacon):
     print('resp headers: {}'.format(r.headers))
 
 
-# Send custom event
-send_custom_event()
+# # Send custom event
+# send_custom_event()
 
-# If url is given as an option then trigger network request to capture network event and send it to collector.
-if args.url:
-  capture_and_send_network_event()
-else:
-  send_network_event()
+# # If url is given as an option then trigger network request to capture network event and send it to collector.
+# if args.url:
+#   capture_and_send_network_event()
+# else:
+#   send_network_event()
 
-# Send error event
-send_error_event()
+# # Send error event
+# send_error_event()
+
+
+#Get_image(20, "getImage")
+
+
+
+
+
+
 
