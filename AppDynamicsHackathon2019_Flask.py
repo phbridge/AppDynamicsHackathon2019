@@ -117,6 +117,9 @@ def webex_teams_webhook_events():
             # Message was sent by someone else; parse message and respond.
             if message.files:
                 print(message.files)
+                camsnapshots = snapshot.snapshot()
+                newmessage = camsnapshots[0]
+                print(camsnapshots[0])
 
                 headers= {
     'Authorization': "Bearer ZTlhN2Y3YWYtOWYwNC00YWIzLTk0YjktMWY1Y2UxMjI4ODY0ZTNhN2FiN2QtMWRi_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f",
@@ -131,9 +134,9 @@ def webex_teams_webhook_events():
                 print("################GOT DST Content")
                 print(type(imageTarget))
 
-                camsnapshots = snapshot.snapshot()
-                newmessage = camsnapshots[0]
-                print(camsnapshots[0])
+                # camsnapshots = snapshot.snapshot()
+                # newmessage = camsnapshots[0]
+                # print(camsnapshots[0])
                 recognition = AppDynamicsHackathon2019_AWS.get_images_from_LOCAL_and_URL(imageTarget,camsnapshots[0])
 
                 api.messages.create(room.id, text=recognition)
