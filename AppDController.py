@@ -32,27 +32,8 @@ except ImportError:
 This sample code illustrates use of IoT REST API with sample data generated for a smart car application.
 '''
 
-# Read Command Line Options
-parser = argparse.ArgumentParser()
-
-# Mandatory argument - appkey
-parser.add_argument("appkey", help="EC-AAB-FYG")
-
-#optional arguments
-parser.add_argument("-c", "--collectorurl", default = "https://fra-iot-col.eum-appdynamics.com",
-                    help="set IoT Collector URL to which the beacons should be sent to")
-parser.add_argument("-u", "--url", help="set sample URL to trigger network request and capture network event")
-parser.add_argument("-X", "--request", default = "GET", help="set request method for the URL. Default is set to GET")
-parser.add_argument("-d", "--data", help="set HTTP POST data in JSON format")
-parser.add_argument("-v", "--verbose", action="store_true", help="enable debug info")
-
-args = parser.parse_args()
-
 # Construct collector url to send beacons to
 sendBeaconUrl = 'https://fra-iot-col.eum-appdynamics.com/eumcollector/iot/v1/application/EC-AAB-FYG/beacons'
-
-if args.verbose:
-  print("Beacon URL: {}".format(sendBeaconUrl))
 
 # Device Information on which the application is running
 device_info = {
