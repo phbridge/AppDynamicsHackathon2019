@@ -59,6 +59,36 @@ def _get_images_from_local(src_path, dst_path):
     return _compare_faces(imageSource, imageTarget)
 
 
+def get_images_from_LOCAL_and_URL(srcimage, dst_url):
+    time.sleep(10)
+    print("################THIS IS THE SRC type")
+    print(type(srcimage))
+    #print(src_url)
+    print("################THIS IS THE DST URL")
+    print(dst_url)
+    #srcresponse = requests.get(src_url)
+    print("content below")
+    #print(srcresponse.content)
+    print("text below")
+    #print(srcresponse.text)
+    print("################GOT SRC")
+    #if srcresponse.status_code == 200:
+    imageSource = BytesIO(srcimage)
+    print("################GOT SRC Content")
+    print(type(imageSource))
+    #print(str(srcresponse.status_code))
+    time.sleep(5)
+    dstresponse = requests.get(dst_url)
+    print("################GOT DST")
+    if dstresponse.status_code == 200:
+        imageTarget = BytesIO(dstresponse.content)
+        print("################GOT DST Content")
+    else:
+        return "we got a none 200 status code. Status code was " + str(dstresponse.status_code)
+    print(str(dstresponse.status_code))
+    return _compare_faces(imageSource, imageTarget)
+
+
 def get_images_from_URL(src_url, dst_url):
     time.sleep(10)
     print("################THIS IS THE SRC URL")
@@ -115,10 +145,10 @@ def _compare_faces(imageSource, imageTarget):
 def main():
     print("null")
 
-    #src_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHNzJjMzliMzM4OWQzNjM3ZGU2YTM0ZDhlYWYzMzk3NDY2NmRhYmMyYzExOTNjMzMxMDQ4NGI4MTRiOTdhNDRiMdsKmdUgM4Mujl0t-QMDsVEVc3Pej58lc1epFGwAikZfNdlbCph-9O7YcPsiZaCury_TVur2OmLsXI4BDEhs9UUsHq7hfnl2wFW_M6UhsZc42cJbmeBQNQGp-qCQlpcNw1Tmn-q05IbfH61GNyjdVjvfjGIW8HixXVR6NjpZC0XsXYFtS_QP8z2VtbCN_YWWUzny347dpWB9mGfxIyoBpC8"
-    #dst_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHNzJjMzliMzM4OWQzNjM3ZGU2YTM0ZDhlYWYzMzk3NDY2NmRhYmMyYzExOTNjMzMxMDQ4NGI4MTRiOTdhNDRiMdsKmdUgM4Mujl0t-QMDsVEVc3Pej58lc1epFGwAikZfNdlbCph-9O7YcPsiZaCury_TVur2OmLsXI4BDEhs9UUsHq7hfnl2wFW_M6UhsZc42cJbmeBQNQGp-qCQlpcNw1Tmn-q05IbfH61GNyjdVjvfjGIW8HixXVR6NjpZC0XsXYFtS_QP8z2VtbCN_YWWUzny347dpWB9mGfxIyoBpC8"
+    src_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHYWYzYTZhNTNlYWI4MDk1ZDcyYTkwN2M4YzBmNDllODNmZDFhMGUzMTE4M2UwMmQ4NmE1ZDc0NmNkZTdiZjhkY9ceNa7vgM2O90Oorr3FVVNnVwXbUEESzpciOkFEHVC4sji0hj0vL44In6tW_b2GExANNnHv9v_30m3wY_sqMEOJtbkqM7Ix1Bnvsl_hD1Evms8hcozFsjtuNC89B8-qzMq-tcZEYEZJq6D-UhQ1d2wzj8vW6LuhtteT3Ui92Ig_yNwMtaIUXg0RDica3y5r7XAy6ajT3Yzc9ZmMiB1poBo"
+    dst_url = "https://spn3.meraki.com/stream/jpeg/snapshot/753a73e5eaa3c047VHZmI5YjdiYmYyYzc0YTZlZTAxYjU3YTU2MzRjZDAxNGUzYzRkZjU3MmYyNDEyNTgyYTQ1MjZiZTI2NGM2YWE4Nb7JlF8myl-orv7f1YNQ9GIHm48f9fETQ_NMjGjDRpmcYK6K4KqFp5KXq38oaSsvF8jWx9Vj17Rypx8Pk9Gl_fUTA92_6JvqLLMKJk8bYXf9Kla_nFrKWwWg6fCTjQMmsPvvWLPn3p5lIRS9FMbYgx1galY7hCbEnSIQyd9gf2xqmltjA6vG-6sDzN2HUvd9PhgAsNGAdpOUrxJ5TyiHUlk"
 
-    #get_images_from_URL(src_url, dst_url)
+    get_images_from_URL(src_url, dst_url)
     #face_matches = _get_images_from_local(SRC_FILE, DST_FILE)
     #URL_face_matches = get_images_from_URL(SRC_FILE_URL, DST_FILE_URL)
     #print("Face matches: " + str(face_matches))
