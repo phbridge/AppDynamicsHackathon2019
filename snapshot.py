@@ -17,21 +17,21 @@ def snapshot():
         }
     print('photo taken')
     CA2_response = requests.request("POST", CameraOne, headers=headers)
-    time.sleep(15)
-
-    CA1_response = requests.request("POST", CameraOne, headers=headers)
+    # time.sleep(15)
+    #
+    # CA1_response = requests.request("POST", CameraOne, headers=headers)
     print('another mugshot done')
 
     #The proper list to return
     camerasnaps =[]
 
-    camerasnaps.append(CA1_response.json()["url"])
+    # camerasnaps.append(CA1_response.json()["url"])
     camerasnaps.append(CA2_response.json()["url"])
 
     #Give two snapshots of the same image to Phil
-    cameraphil =[]
-    cameraphil.append(CA1_response.json()["url"])
-    cameraphil.append(CA1_response.json()["url"])
+    # cameraphil =[]
+    # cameraphil.append(CA1_response.json()["url"])
+    # cameraphil.append(CA1_response.json()["url"])
 
     return camerasnaps
 
