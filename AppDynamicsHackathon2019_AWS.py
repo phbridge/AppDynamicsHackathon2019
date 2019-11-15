@@ -61,57 +61,57 @@ def _get_images_from_local(src_path, dst_path):
 
 def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     time.sleep(10)
-    print("################THIS IS THE SRC type")
-    print(type(srcimage))
+    #print("################THIS IS THE SRC type")
+    #print(type(srcimage))
     #print(src_url)
-    print("################THIS IS THE DST URL")
-    print(dst_url)
+    #print("################THIS IS THE DST URL")
+    #print(dst_url)
     #srcresponse = requests.get(src_url)
-    print("content below")
+    #print("content below")
     #print(srcresponse.content)
-    print("text below")
+    #print("text below")
     #print(srcresponse.text)
-    print("################GOT SRC")
+    #print("################GOT SRC")
     #if srcresponse.status_code == 200:
     #imageSource = BytesIO(srcimage)
-    print("################GOT SRC Content")
-    print(type(srcimage))
+    #print("################GOT SRC Content")
+    #print(type(srcimage))
     #print(str(srcresponse.status_code))
     time.sleep(5)
     dstresponse = requests.get(dst_url)
-    print("################GOT DST")
+    #print("################GOT DST")
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
         print("################GOT DST Content")
     else:
         return "we got a none 200 status code. Status code was " + str(dstresponse.status_code)
-    print(str(dstresponse.status_code))
+    #print(str(dstresponse.status_code))
     return _compare_faces(srcimage, imageTarget)
 
 
 def get_images_from_URL(src_url, dst_url):
     time.sleep(2)
-    print("################THIS IS THE SRC URL")
-    print(src_url)
-    print("################THIS IS THE DST URL")
-    print(dst_url)
+    #print("################THIS IS THE SRC URL")
+    #print(src_url)
+    #print("################THIS IS THE DST URL")
+    #print(dst_url)
     srcresponse = requests.get(src_url)
-    print("content below")
+    #print("content below")
     #print(srcresponse.content)
-    print("text below")
+    #print("text below")
     #print(srcresponse.text)
-    print("################GOT SRC")
+    #print("################GOT SRC")
     if srcresponse.status_code == 200:
         imageSource = BytesIO(srcresponse.content)
-        print("################GOT SRC Content")
-    print(str(srcresponse.status_code))
+    #    print("################GOT SRC Content")
+    #print(str(srcresponse.status_code))
     time.sleep(5)
     dstresponse = requests.get(dst_url)
-    print("################GOT DST")
+    #print("################GOT DST")
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
-        print("################GOT DST Content")
-    print(str(dstresponse.status_code))
+    #    print("################GOT DST Content")
+    #print(str(dstresponse.status_code))
     return _compare_faces(imageSource, imageTarget)
 
 
@@ -119,13 +119,13 @@ def _compare_faces(imageSource, imageTarget):
     client = boto3.client('rekognition', region_name=aws_region,
                           aws_access_key_id=aws_access_key_id,
                           aws_secret_access_key=aws_secret_access_key)
-    print("FIRST")
-    print(type(imageSource.read()))
-    print(type(imageSource))
-    imageSource.seek(0)
-    print("SECOND")
-    print(type(imageTarget.read()))
-    print(type(imageTarget))
+    #print("FIRST")
+    #print(type(imageSource.read()))
+    #print(type(imageSource))
+    #imageSource.seek(0)
+    #print("SECOND")
+    #print(type(imageTarget.read()))
+    #print(type(imageTarget))
     imageTarget.seek(0)
     response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
     print(str(response))
@@ -148,7 +148,7 @@ def _compare_faces(imageSource, imageTarget):
         response += "WARNING WARNING"
         response += "The person is NOT genuine we are " + str(similarity) + " confident about this"
         response += "WARNING WARNING"
-    return response 
+    return response
     # similarity, imposter
 
 
