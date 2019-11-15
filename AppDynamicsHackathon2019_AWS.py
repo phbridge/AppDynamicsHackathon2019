@@ -103,17 +103,17 @@ def _compare_faces(imageSource, imageTarget):
     imageSource.close()
     imageTarget.close()
     imposter = True
-    response = ""
+    responder = ""
     print(str(len(response['FaceMatches'])))
     if int(len(response['FaceMatches'])) == 1:
         imposter = False
-        response = "The person is genuine we are " + str(similarity) + " confident about this"
+        responder = "The person is genuine we are " + str(similarity) + " confident about this"
     else:
-        response += "WARNING WARNING"
-        response += "The person is NOT genuine we are " + str(similarity) + " confident about this"
-        response += "WARNING WARNING"
+        responder += "WARNING WARNING"
+        responder += "The person is NOT genuine we are " + str(similarity) + " confident about this"
+        responder += "WARNING WARNING"
     #similarity, imposter
-    return response
+    return responder
 
 
 def main():
