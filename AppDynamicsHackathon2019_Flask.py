@@ -130,6 +130,10 @@ def webex_teams_webhook_events():
                 #                                                webhook_obj.data.personEmail + " - " +
                 #                                                message.text))
                 return 'OK'
+
+            elif message.files:
+                print(message.files)
+
             else:
                 lookup_go = re.split(' |\n', str(message.text).upper())
                 # lookup_go = str(message.text).split("\n").split(" ")
