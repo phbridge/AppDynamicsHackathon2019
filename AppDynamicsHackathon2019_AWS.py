@@ -73,9 +73,9 @@ def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     #print(srcresponse.text)
     print("################GOT SRC")
     #if srcresponse.status_code == 200:
-    imageSource = BytesIO(srcimage)
+    #imageSource = BytesIO(srcimage)
     print("################GOT SRC Content")
-    print(type(imageSource))
+    print(type(srcimage))
     #print(str(srcresponse.status_code))
     time.sleep(5)
     dstresponse = requests.get(dst_url)
@@ -86,7 +86,7 @@ def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     else:
         return "we got a none 200 status code. Status code was " + str(dstresponse.status_code)
     print(str(dstresponse.status_code))
-    return _compare_faces(imageSource, imageTarget)
+    return _compare_faces(srcimage, imageTarget)
 
 
 def get_images_from_URL(src_url, dst_url):
@@ -127,8 +127,8 @@ def _compare_faces(imageSource, imageTarget):
     print(type(imageTarget.read()))
     print(type(imageTarget))
     imageTarget.seek(0)
-    response = client.compare_faces(SimilarityThreshold=80, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
-
+    response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
+    print(str(response))
     for faceMatch in response['FaceMatches']:
         position = faceMatch['Face']['BoundingBox']
         similarity = str(faceMatch['Similarity'])
