@@ -87,12 +87,22 @@ def get_images_from_URL(src_url, dst_url):
 
 
 def _compare_faces(imageSource, imageTarget):
+    responder = ""
     client = boto3.client('rekognition', region_name=aws_region,
                           aws_access_key_id=aws_access_key_id,
                           aws_secret_access_key=aws_secret_access_key)
     imageTarget.seek(0)
-    response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
-    print(str(response))
+    try:
+        response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
+        print(str(response))
+    except client.exceptions.InvalidParameterException as e:
+        responder = "no face detected in one of the images"
+        return responder
+    except Exception as e:
+        responder = "something went wrong hit error "
+        responder += str(e)
+        return responder
+
     similarity = "0"
     for faceMatch in response['FaceMatches']:
         position = faceMatch['Face']['BoundingBox']
@@ -104,17 +114,14 @@ def _compare_faces(imageSource, imageTarget):
 
     imageSource.close()
     imageTarget.close()
-    imposter = True
-    responder = ""
+
     print(str(len(response['FaceMatches'])))
     if int(len(response['FaceMatches'])) == 1:
-        imposter = False
         responder = "The person is genuine we are " + str(similarity) + " confident about this"
     else:
-        responder += "WARNING WARNING"
-        responder += "The person is NOT genuine we are " + str(similarity) + " confident about this"
-        responder += "WARNING WARNING"
-    #similarity, imposter
+        responder += "WARNING WARNING\n"
+        responder += "The person is NOT genuine INTEROGATE THEM"
+        responder += "WARNING WARNING\n"
     return responder
 
 
