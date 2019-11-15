@@ -113,7 +113,9 @@ def webex_teams_webhook_events():
 
         else:
             # Message was sent by someone else; parse message and respond.
-            if "HELP" in str(message.text).upper() or "?" in message.text:
+            if message.files:
+                print(message.files)
+            elif "HELP" in str(message.text).upper() or "?" in message.text:
                 return_messsage = """Welcome to the Cisco AppD Who the F**k are you bot!!!!
 
 
@@ -130,6 +132,10 @@ def webex_teams_webhook_events():
                 #                                                webhook_obj.data.personEmail + " - " +
                 #                                                message.text))
                 return 'OK'
+
+            # if message.files:
+            #     print(message.files)
+
             else:
                 lookup_go = re.split(' |\n', str(message.text).upper())
                 # lookup_go = str(message.text).split("\n").split(" ")
@@ -141,7 +147,7 @@ def webex_teams_webhook_events():
                         camsnapshots = snapshot.snapshot()
                         newmessage=camsnapshots[0]
                         print(camsnapshots[0])
-                        recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0], camsnapshots[0])
+                        recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0], camsnapshots[1])
                         api.messages.create(room.id, text=str(recognition))
 
                         #recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0],camsnapshots[0])

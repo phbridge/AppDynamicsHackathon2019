@@ -2,7 +2,7 @@
 
 import requests
 import json
-
+import time
 import requests
 import credentials
 import time
@@ -15,8 +15,12 @@ def snapshot():
         'X-Cisco-Meraki-API-Key': credentials.MERAKI_API,
         'Content-Type': "application/x-www-form-urlencoded",
         }
-    CA2_response = requests.request("POST", CameraTwo, headers=headers)
+    print('photo taken')
+    CA2_response = requests.request("POST", CameraOne, headers=headers)
+    time.sleep(15)
+
     CA1_response = requests.request("POST", CameraOne, headers=headers)
+    print('another mugshot done')
 
     #The proper list to return
     camerasnaps =[]
@@ -29,6 +33,6 @@ def snapshot():
     cameraphil.append(CA1_response.json()["url"])
     cameraphil.append(CA1_response.json()["url"])
 
-    return cameraphil
+    return camerasnaps
 
     #return camerasnaps
