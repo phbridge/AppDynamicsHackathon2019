@@ -75,7 +75,7 @@ def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     #if srcresponse.status_code == 200:
     #imageSource = BytesIO(srcimage)
     print("################GOT SRC Content")
-    print(type(imageSource))
+    print(type(srcimage))
     #print(str(srcresponse.status_code))
     time.sleep(5)
     dstresponse = requests.get(dst_url)
