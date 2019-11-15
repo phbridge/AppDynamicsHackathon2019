@@ -1,4 +1,4 @@
-#Snapshot Code for Who the Fuck are you!
+#Snapshot Code
 
 import requests
 import json
@@ -20,23 +20,13 @@ def snapshot():
     meraki_snapshot_start_time = datetime.now()                     ############
     CA2_response = requests.request("POST", CameraOne, headers=headers)
     meraki_snapshot_finish_time = datetime.now()  ############
-    maraki_snapshot_url_creation_time = meraki_snapshot_finish_time - meraki_snapshot_start_time    ########################
-    # time.sleep(15)
-    #
-    # CA1_response = requests.request("POST", CameraOne, headers=headers)
+    meraki_snapshot_url_creation_time = meraki_snapshot_finish_time - meraki_snapshot_start_time    ########################
+
     print('another mugshot done')
 
-    #The proper list to return
     camerasnaps =[]
-
-    # camerasnaps.append(CA1_response.json()["url"])
     camerasnaps.append(CA2_response.json()["url"])
 
-    #Give two snapshots of the same image to Phil
-    # cameraphil =[]
-    # cameraphil.append(CA1_response.json()["url"])
-    # cameraphil.append(CA1_response.json()["url"])
 
     return camerasnaps
 
-    #return camerasnaps

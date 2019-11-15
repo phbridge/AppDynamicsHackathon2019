@@ -137,9 +137,7 @@ def webex_teams_webhook_events():
                 print("################GOT DST Content")
                 print(type(imageTarget))
 
-                # camsnapshots = snapshot.snapshot()
-                # newmessage = camsnapshots[0]
-                # print(camsnapshots[0])
+
                 recognition = AppDynamicsHackathon2019_AWS.get_images_from_LOCAL_and_URL(imageTarget,camsnapshots[0])
 
                 api.messages.create(room.id, text=recognition)
@@ -167,12 +165,11 @@ def webex_teams_webhook_events():
                 #                                                message.text))
                 return 'OK'
 
-            # if message.files:
-            #     print(message.files)
+
 
             else:
                 lookup_go = re.split(' |\n', str(message.text).upper())
-                # lookup_go = str(message.text).split("\n").split(" ")
+
                 for go in lookup_go:
                     normalised_sku = go.upper().strip(" ").strip("\n")
                     if normalised_sku == "GO" or \
@@ -183,9 +180,6 @@ def webex_teams_webhook_events():
                         print(camsnapshots[0])
                         recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0], camsnapshots[1])
                         api.messages.create(room.id, text=str(recognition))
-
-                        #recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0],camsnapshots[0])
-
                         continue
 
             return 'OK'
@@ -247,4 +241,3 @@ if __name__ == "__main__":
     create_webhook(api=api)
     http_server = wsgiserver.WSGIServer(host=FLASK_HOST, port=FLASK_PORT, wsgi_app=flask_app)
     http_server.start()
-    #message_to_send = ApPDynamicsHackaton2019_AWS(snapshot)
