@@ -50,6 +50,7 @@ import snapshot
 import AppDynamicsHackathon2019_AWS
 import requests
 from io import BytesIO
+import AppDController
 
 FLASK_HOST = credentials.FLASK_HOST
 FLASK_PORT = credentials.FLASK_PORT
@@ -117,7 +118,7 @@ def webex_teams_webhook_events():
             # Message was sent by someone else; parse message and respond.
             if message.files:
                 print(message.files)
-                camsnapshots = snapshot.snapshot()
+                camsnapshots, meraki_snapshot_url_creation_time = snapshot.snapshot()
                 newmessage = camsnapshots[0]
                 print(camsnapshots[0])
                 api.messages.create(room.id, text="Mugshot Taken")
@@ -141,6 +142,14 @@ def webex_teams_webhook_events():
                 recognition = AppDynamicsHackathon2019_AWS.get_images_from_LOCAL_and_URL(imageTarget,camsnapshots[0])
 
                 api.messages.create(room.id, text=recognition)
+
+                try:
+                    AppDController.Get_image(int(webex_attachement_response_time.seconds), "WebEx")
+                    AppDController.Meraki_snap(int(meraki_snapshot_url_creation_time.seconds), "Meraki_snap")
+                    AppDController.Pull_Meraki()
+                    AppDController.Upload_AWS()
+                except Exception as e:
+                    return "error hit was " + str(e)
 
 
 
@@ -175,7 +184,7 @@ def webex_teams_webhook_events():
                     if normalised_sku == "GO" or \
                             normalised_sku == "go" :
 
-                        camsnapshots = snapshot.snapshot()
+                        camsnapshots, meraki_snapshot_url_creation_time = snapshot.snapshot()
                         newmessage=camsnapshots[0]
                         print(camsnapshots[0])
                         recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(camsnapshots[0], camsnapshots[1])

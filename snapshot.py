@@ -28,5 +28,5 @@ def snapshot():
     camerasnaps.append(CA2_response.json()["url"])
 
 
-    return camerasnaps
+    return camerasnaps, meraki_snapshot_url_creation_time
 
