@@ -117,7 +117,7 @@ def _compare_faces(imageSource, imageTarget):
 
     print(str(len(response['FaceMatches'])))
     if int(len(response['FaceMatches'])) == 1:
-        responder = "The person is genuine we are " + str(similarity) + " confident about this"
+        responder = "The person is genuine we are " + str(similarity)[0:5] + " confident about this"
     else:
         responder += "WARNING WARNING\n"
         responder += "The person is NOT genuine INTEROGATE THEM"
