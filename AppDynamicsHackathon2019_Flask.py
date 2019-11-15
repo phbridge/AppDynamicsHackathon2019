@@ -124,7 +124,7 @@ def webex_teams_webhook_events():
     'Postman-Token': "7c9aaad4-88a7-4206-9a7d-28fd442dc59d"
     }
 
-                dstresponse = requests.get(message.files[0], header=headers)
+                dstresponse = requests.get(message.files[0], headers=headers)
                 print("################GOT DST")
                 if dstresponse.status_code == 200:
                     imageTarget = BytesIO(dstresponse.content)
