@@ -60,9 +60,8 @@ def _get_images_from_local(src_path, dst_path):
 
 
 def get_images_from_LOCAL_and_URL(srcimage, dst_url):
-    time.sleep(2)
+    time.sleep(5)
     dstresponse = requests.get(dst_url)
-    #print("################GOT DST")
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
     else:
@@ -77,7 +76,7 @@ def get_images_from_URL(src_url, dst_url):
         imageSource = BytesIO(srcresponse.content)
     else:
         return "Image source not valid URL status code " + str(srcresponse.status_code)
-    time.sleep(5)
+    time.sleep(2)
     dstresponse = requests.get(dst_url)
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
@@ -90,13 +89,6 @@ def _compare_faces(imageSource, imageTarget):
     client = boto3.client('rekognition', region_name=aws_region,
                           aws_access_key_id=aws_access_key_id,
                           aws_secret_access_key=aws_secret_access_key)
-    #print("FIRST")
-    #print(type(imageSource.read()))
-    #print(type(imageSource))
-    #imageSource.seek(0)
-    #print("SECOND")
-    #print(type(imageTarget.read()))
-    #print(type(imageTarget))
     imageTarget.seek(0)
     response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
     print(str(response))
@@ -120,8 +112,8 @@ def _compare_faces(imageSource, imageTarget):
         response += "WARNING WARNING"
         response += "The person is NOT genuine we are " + str(similarity) + " confident about this"
         response += "WARNING WARNING"
+    #similarity, imposter
     return response
-    # similarity, imposter
 
 
 def main():
