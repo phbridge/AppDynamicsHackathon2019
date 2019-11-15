@@ -86,7 +86,7 @@ def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     else:
         return "we got a none 200 status code. Status code was " + str(dstresponse.status_code)
     print(str(dstresponse.status_code))
-    return _compare_faces(imageSource, imageTarget)
+    return _compare_faces(srcimage, imageTarget)
 
 
 def get_images_from_URL(src_url, dst_url):
