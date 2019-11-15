@@ -113,7 +113,9 @@ def webex_teams_webhook_events():
 
         else:
             # Message was sent by someone else; parse message and respond.
-            if "HELP" in str(message.text).upper() or "?" in message.text:
+            if message.files:
+                print(message.files)
+            elif "HELP" in str(message.text).upper() or "?" in message.text:
                 return_messsage = """Welcome to the Cisco AppD Who the F**k are you bot!!!!
 
 
@@ -131,8 +133,8 @@ def webex_teams_webhook_events():
                 #                                                message.text))
                 return 'OK'
 
-            elif message.files:
-                print(message.files)
+            # if message.files:
+            #     print(message.files)
 
             else:
                 lookup_go = re.split(' |\n', str(message.text).upper())
