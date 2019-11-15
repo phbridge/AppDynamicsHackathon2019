@@ -61,7 +61,7 @@ def _get_images_from_local(src_path, dst_path):
 
 def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     print(dst_url)
-    #time.sleep(10)
+    time.sleep(10)
     dstresponse = requests.get(dst_url)
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
@@ -93,6 +93,7 @@ def _compare_faces(imageSource, imageTarget):
     imageTarget.seek(0)
     response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
     print(str(response))
+    similarity = "0"
     for faceMatch in response['FaceMatches']:
         position = faceMatch['Face']['BoundingBox']
         similarity = str(faceMatch['Similarity'])
