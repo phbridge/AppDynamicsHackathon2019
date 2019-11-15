@@ -127,8 +127,10 @@ def webex_teams_webhook_events():
     'cache-control': "no-cache",
     'Postman-Token': "7c9aaad4-88a7-4206-9a7d-28fd442dc59d"
     }
-
+                webex_attachment_start_fetch_time = datetime.now()                      ################
                 dstresponse = requests.get(message.files[0], headers=headers)
+                webex_attachment_finish_fetch_time = datetime.now()                     ################
+                webex_attachement_response_time = webex_attachment_finish_fetch_time - webex_attachment_start_fetch_time ################################
                 print("################GOT DST")
                 if dstresponse.status_code == 200:
                     imageTarget = BytesIO(dstresponse.content)

@@ -6,6 +6,7 @@ import time
 import requests
 import credentials
 import time
+from datetime import datetime
 
 CameraOne = "https://api.meraki.com/api/v0/networks/{}/cameras/{}/snapshot".format(credentials.MERAKINETID, credentials.CAMERA_1)
 CameraTwo = "https://api.meraki.com/api/v0/networks/{}/cameras/{}/snapshot".format(credentials.MERAKINETID, credentials.CAMERA_2)
@@ -16,7 +17,10 @@ def snapshot():
         'Content-Type': "application/x-www-form-urlencoded",
         }
     print('photo taken')
+    meraki_snapshot_start_time = datetime.now()                     ############
     CA2_response = requests.request("POST", CameraOne, headers=headers)
+    meraki_snapshot_finish_time = datetime.now()  ############
+    maraki_snapshot_url_creation_time = meraki_snapshot_finish_time - meraki_snapshot_start_time    ########################
     # time.sleep(15)
     #
     # CA1_response = requests.request("POST", CameraOne, headers=headers)

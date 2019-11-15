@@ -44,6 +44,7 @@ import requests
 from io import BytesIO
 import credentials
 import time
+from datetime import datetime
 
 aws_access_key_id = credentials.aws_access_key_id
 aws_secret_access_key = credentials.aws_secret_access_key
@@ -62,8 +63,10 @@ def _get_images_from_local(src_path, dst_path):
 def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     print(dst_url)
     time.sleep(5)
-    
+    start_time_meraki_get = datetime.now()      #########
     dstresponse = requests.get(dst_url)
+    finish_time_meraki_get = datetime.now()     #########
+    meraki_fetch_time = finish_time_meraki_get - start_time_meraki_get      #####################
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
     else:
@@ -94,7 +97,10 @@ def _compare_faces(imageSource, imageTarget):
                           aws_secret_access_key=aws_secret_access_key)
     imageTarget.seek(0)
     try:
+        start_time_aws_get = datetime.now()                         #########
         response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
+        finish_time_aws_get = datetime.now()                        #########
+        aws_fetch_time = finish_time_aws_get - start_time_aws_get  #####################
         print(str(response))
     except client.exceptions.InvalidParameterException as e:
         responder = "no face detected in one of the images"
