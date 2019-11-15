@@ -48,6 +48,8 @@ import signal                                       # catches SIGTERM and SIGINT
 import sys                                          # for error to catch and debug
 import snapshot
 import AppDynamicsHackathon2019_AWS
+import requests
+from io import BytesIO
 
 FLASK_HOST = credentials.FLASK_HOST
 FLASK_PORT = credentials.FLASK_PORT
@@ -115,6 +117,25 @@ def webex_teams_webhook_events():
             # Message was sent by someone else; parse message and respond.
             if message.files:
                 print(message.files)
+
+                headers= {
+    'Authorization': "Bearer ZTlhN2Y3YWYtOWYwNC00YWIzLTk0YjktMWY1Y2UxMjI4ODY0ZTNhN2FiN2QtMWRi_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f",
+    'cache-control': "no-cache",
+    'Postman-Token': "7c9aaad4-88a7-4206-9a7d-28fd442dc59d"
+    }
+
+                dstresponse = requests.get(message.files[0], header=headers)
+                print("################GOT DST")
+                if dstresponse.status_code == 200:
+                    imageTarget = BytesIO(dstresponse.content)
+                print("################GOT DST Content")
+                print(type(imageTarget))
+
+                camsnapshots = snapshot.snapshot()
+                newmessage = camsnapshots[0]
+                print(camsnapshots[0])
+                recognition = AppDynamicsHackathon2019_AWS.get_images_from_URL(imageTarget,camsnapshots[0])
+                api.messages.create(room.id, text=str(recognition))
 
 
 
