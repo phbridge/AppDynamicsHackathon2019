@@ -135,7 +135,8 @@ def webex_teams_webhook_events():
                 newmessage = camsnapshots[0]
                 print(camsnapshots[0])
                 recognition = AppDynamicsHackathon2019_AWS.get_images_from_LOCAL_and_URL(imageTarget,camsnapshots[0])
-                api.messages.create(room.id, text=str(recognition))
+
+                api.messages.create(room.id, text=recognition)
 
 
 
