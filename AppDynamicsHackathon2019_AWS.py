@@ -61,7 +61,8 @@ def _get_images_from_local(src_path, dst_path):
 
 def get_images_from_LOCAL_and_URL(srcimage, dst_url):
     print(dst_url)
-    time.sleep(10)
+    time.sleep(5)
+    
     dstresponse = requests.get(dst_url)
     if dstresponse.status_code == 200:
         imageTarget = BytesIO(dstresponse.content)
