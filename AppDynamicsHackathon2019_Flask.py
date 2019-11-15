@@ -133,7 +133,7 @@ def webex_teams_webhook_events():
                 dstresponse = requests.get(message.files[0], headers=headers)
                 webex_attachment_finish_fetch_time = datetime.now()                     ################
                 #print(webex_attachment_finish_fetch_time)
-                webex_attachement_response_time = webex_attachment_start_fetch_time - webex_attachment_finish_fetch_time ################################
+                webex_attachement_response_time = webex_attachment_finish_fetch_time - webex_attachment_start_fetch_time ################################
                 #print(webex_attachement_response_time)
                 print("################GOT DST")
                 if dstresponse.status_code == 200:
