@@ -127,8 +127,8 @@ def _compare_faces(imageSource, imageTarget):
     print(type(imageTarget.read()))
     print(type(imageTarget))
     imageTarget.seek(0)
-    response = client.compare_faces(SimilarityThreshold=80, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
-
+    response = client.compare_faces(SimilarityThreshold=30, SourceImage={'Bytes': imageSource.read()}, TargetImage={'Bytes': imageTarget.read()})
+    print(str(response))
     for faceMatch in response['FaceMatches']:
         position = faceMatch['Face']['BoundingBox']
         similarity = str(faceMatch['Similarity'])
